@@ -1,0 +1,13 @@
+version: '2'
+services:
+  postgres:
+    dockerfile: .
+    ports:
+     - "5432:5432"
+  web:
+    build: .
+    dockerfile: Dockerfile-app
+    ports:
+     - "8080:8080"
+    links:
+     - postgres

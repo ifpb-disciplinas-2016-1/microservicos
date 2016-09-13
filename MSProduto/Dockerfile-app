@@ -1,0 +1,7 @@
+FROM payara/server-web
+ENV DOMAIN domain1
+ENV LIB /opt/payara41/glassfish/domains/${DOMAIN}/lib/
+ENV DEPLOY ${PAYARA_PATH}/glassfish/domains/${DOMAIN}/autodeploy/
+ADD target/micro-servico-produto/WEB-INF/lib/ ${LIB}
+ENTRYPOINT $PAYARA_PATH/bin/asadmin start-domain --verbose ${DOMAIN}
+ADD target/Micro-Servico-Produto-1.0-SNAPSHOT.war  ${DEPLOY}
