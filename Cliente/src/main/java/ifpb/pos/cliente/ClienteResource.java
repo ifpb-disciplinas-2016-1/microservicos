@@ -16,6 +16,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -55,9 +56,11 @@ public class ClienteResource {
 //    
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response deletar(Cliente cliente){
-        em.remove(cliente);
-        return Response.ok().build();
+    @Path("{id}")
+    public Response deletar(@PathParam("id") int id){       
+        Cliente c = em.find(Cliente.class, id);
+        em.remove(c);
+        return Response.ok(c).build();
     }
     
     @PUT
