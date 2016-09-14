@@ -1,4 +1,7 @@
-FROM postgres
-ENV POSTGRES_USER postgres
-ENV POSTGRES_PASSWORD 123
-ENV POSTGRES_DB produto
+FROM payara/server-full
+ENV DOMAIN domain1
+ENV LIB /opt/payara41/glassfish/domains/${DOMAIN}/lib/
+ENV DEPLOY ${PAYARA_PATH}/glassfish/domains/${DOMAIN}/autodeploy/
+ADD target/MSProduto/WEB-INF/lib/ ${LIB}
+ENTRYPOINT $PAYARA_PATH/bin/asadmin start-domain --verbose ${DOMAIN}
+ADD target/MSProduto.war  ${DEPLOY}

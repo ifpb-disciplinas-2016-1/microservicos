@@ -6,6 +6,7 @@
 package ifpb.ads.pos.microservicos.entity;
 
 import java.io.Serializable;
+import javax.annotation.sql.DataSourceDefinition;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -25,7 +26,8 @@ import lombok.NoArgsConstructor;
 @XmlRootElement
 public class Produto implements Serializable {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
     private String descricao;
     private double valor;

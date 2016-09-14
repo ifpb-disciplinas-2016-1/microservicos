@@ -7,6 +7,7 @@ package ifpb.ads.pos.microservicos.dao;
 
 import ifpb.ads.pos.microservicos.entity.Produto;
 import java.util.List;
+import javax.annotation.sql.DataSourceDefinition;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,6 +16,13 @@ import javax.persistence.PersistenceContext;
  *
  * @author Kaique Candido
  */
+
+@DataSourceDefinition(
+        name = "java:app/jdbc/produto",
+        className = "org.postgresql.Driver",
+        url = "jdbc:postgresql://192.168.99.100:5432/produto",
+        user = "postgres",
+        password = "123")
 @Stateless
 public class ProdutoDao {
 
