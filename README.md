@@ -2,8 +2,10 @@
 
 ###cliente
 - Luciana, Priscila e Fernanda
+
 ###produto
 - Antonio e Kaique
+
 ###venda
 - Marcus e Kleonte
 
