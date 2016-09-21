@@ -5,6 +5,7 @@
  */
 package ifpb.pos.cliente;
 
+import java.util.List;
 import javax.annotation.sql.DataSourceDefinition;
 import javax.ejb.Stateless;
 import javax.persistence.Entity;
@@ -18,6 +19,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -30,7 +32,7 @@ import javax.ws.rs.core.Response;
 @DataSourceDefinition(
         name = "java:app/jdbc/cliente",
         className = "org.postgresql.Driver",
-        url = "jdbc:postgresql://localhost:5432/cliente",
+        url = "jdbc:postgresql://192.168.99.100:5433/cliente",
         user = "postgres",
         password = "123")
 public class ClienteResource {
@@ -40,10 +42,24 @@ public class ClienteResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response buscar(int id) {
+    public Response buscar() {
+        List<Cliente> lista
+                = em.createQuery("FROM Cliente c", Cliente.class)
+                        .getResultList();
+        GenericEntity<List<Cliente>> gLista = 
+                new GenericEntity<List<Cliente>>(lista) {
+        };
+        return Response.ok(gLista).build();
+
+    }
+
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscar(@PathParam("id") int id) {
         Cliente c = em.find(Cliente.class, id);
         return Response.ok(c).build();
-                
+
     }
 
     @POST
@@ -57,17 +73,17 @@ public class ClienteResource {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public Response deletar(@PathParam("id") int id){       
+    public Response deletar(@PathParam("id") int id) {
         Cliente c = em.find(Cliente.class, id);
         em.remove(c);
         return Response.ok(c).build();
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response atualizar(Cliente cliente){
+    public Response atualizar(Cliente cliente) {
         em.merge(cliente);
         return Response.ok(cliente).build();
     }
-    
+
 }
